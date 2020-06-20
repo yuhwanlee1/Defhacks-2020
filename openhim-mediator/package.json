@@ -1,0 +1,48 @@
+{
+  "name": "oim-db-mediator",
+  "version": "1.0.0",
+  "description": "Pulls provider phone numbers from OpenInfoMan and adds them to a database",
+  "dependencies": {
+    "array-unique": "^0.3.2",
+    "async": "^3.2.0",
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "mysql": "^2.18.1",
+    "openhim-mediator-utils": "^0.2.3",
+    "path": "^0.12.7",
+    "pino": "^5.17.0",
+    "pino-pretty": "^3.6.1",
+    "request": "^2.88.0",
+    "snake-case": "^3.0.3",
+    "underscore": "^1.10.2",
+    "urijs": "^1.19.2",
+    "xmldom": "^0.2.1",
+    "xpath": "0.0.27"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "prettier": "^1.18.2"
+  },
+  "scripts": {
+    "start": "npm run build && node lib/app.js",
+    "build": "babel src --out-dir lib",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
+  },
+  "keywords": [
+  ],
+  "author": "Tyler Lin",
+  "license": "MIT",
+  "main": "babel.config.js"
+}

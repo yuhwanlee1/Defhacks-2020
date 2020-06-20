@@ -1,0 +1,113 @@
+{
+  "urn": "urn:mediator:oim-db",
+  "version": "1.0.0",
+  "name": "OpenInfoMan-Database Mediator",
+  "description": "Pulls provider phone numbers from OpenInfoMan and adds them to a database",
+  "defaultChannelConfig": [
+    {
+      "name": "Update Database from OpenInfoMan",
+      "urlPattern": "^/openinfoman-db$",
+      "pollingSchedule": "15 07,13 * * *",
+      "status": "enabled",
+      "routes": [
+        {
+          "name": "Sync OIM and Database phone numbers",
+          "secured": false,
+          "host": "localhost",
+          "port": 3002,
+          "path": "/update",
+          "primary": true,
+          "status": "enabled",
+          "type": "http"
+        }
+      ],
+      "authType": "private",
+      "allow": [
+        "defhacks"
+      ],
+      "type": "polling"
+    },
+    {
+      "name": "Update OpenInfoMan cache",
+      "urlPattern": "^/oim-cache$",
+      "pollingSchedule": "00 07,13 * * *",
+      "status": "enabled",
+      "routes": [
+        {
+          "name": "Refresh OpenInfoMan Cache of HRIS Providers",
+          "secured": false,
+          "host": "localhost",
+          "port": 8984,
+          "path": "/CSD/pollService/directory/Providers/update_cache",
+          "primary": true,
+          "status": "enabled",
+          "type": "http"
+        }
+      ],
+      "authType": "private",
+      "allow": [
+        "defhacks"
+      ],
+      "type": "polling"
+    }
+  ],
+  "endpoints": [
+    {
+      "name": "Mediator Endpoint",
+      "host": "localhost",
+      "path": "/update",
+      "port": "3002",
+      "primary": true,
+      "type": "http"
+    }
+  ],
+  "configDefs": [
+    {
+      "param": "facility",
+      "displayName": "Facility Name",
+      "description": "The name of your healthcare facility",
+      "type": "string"
+    },
+    {
+      "param": "openinfoman",
+      "displayName": "OpenInfoMan Server",
+      "description": "The OpenInfoMan server to sync providers with",
+      "type": "struct",
+      "template": [
+        {
+          "param": "url",
+          "displayName": "URL",
+          "description": "The base URL (e.g. http://localhost:8984)",
+          "type": "string"
+        },
+        {
+          "type": "string",
+          "description": "Username",
+          "displayName": "Username",
+          "param": "username"
+        },
+        {
+          "type": "password",
+          "description": "Password",
+          "displayName": "Password",
+          "param": "password"
+        },
+        {
+          "param": "queryDocument",
+          "displayName": "Provider query document",
+          "description": "The CSD document to query providers from in order to send to RapidPro",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "config": {
+    "facility": "",
+    "openinfoman": {
+      "url": "http://localhost:8984",
+      "username": "admin",
+      "password": "admin",
+      "queryDocument": "Providers"
+    }
+  }
+}
