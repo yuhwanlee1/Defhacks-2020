@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-firestore.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Medicinet</title>
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bulma -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <link rel="stylesheet" href="styles/debug.css">
+    <link rel="stylesheet" href="res/css/styles.css">
+</head>
+<section class="hero is-fullheight">
+    <nav class="hero-head">
+        <div class="columns has-text-weight-bold ">
+            <div class="column left">
+                <figure class="image center is-128x128">
+                    <img src="res/images/icon.png" style="width : 7rem; height: 7rem;">
+                </figure>
+                <h1 class="title" style="white-space: nowrap;">Medicinet</h1>
+            </div>
+            <div class="column navbarleft">
+            </div>
+        </div>
+    </nav>
+    <header class="hero-body">
+        <div id="grid" style="width: 100%">
+            <div id="a">
+                <p class="desc">Lorem ipsum dolor sit amet, consectetur</p>
+                <p class="desc2">Lorem ipsum dolor sit amet, consectetur</p>
+                <div id="buttondiv" class="container left">
+                    <button class="button buttonclass is-rounded" style="width: 40%">lorem hehe</button>
+                </div>
+            </div>
+            <div id="b" class="center">
+                <figure id="laptopFigure" class="image center is-128x128">
+                    <img id="laptopImage" src="res/images/logo.svg">
+                </figure>
+            </div>
+        </div>
+        </div>
+    </header>
+
+
+</section>
+
+<body>
+
+    <h1>Cloud Cafe</h1>
+
+    <div class="content">
+
+        <form id="add-cafe-form">
+            <input type="text" name="name" placeholder="Cafe name">
+            <input type="text" name="city" placeholder="Cafe city">
+            <button>Add Cafe</button>
+        </form>
+
+        <ul id="cafe-list"></ul>
+
+    </div>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBg4FG8JQUJ_NqzCj_LwkzyZmZHKuDwiHs",
+            authDomain: "defhacks-280518.firebaseapp.com",
+            databaseURL: "https://defhacks-280518.firebaseio.com",
+            projectId: "defhacks-280518",
+            storageBucket: "defhacks-280518.appspot.com",
+            messagingSenderId: "780306163126",
+            appId: "1:780306163126:web:9c3fbd3450924775ae0d17"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+    </script>
+    <script src="app.js"></script>
+</body>
+
+</html>
