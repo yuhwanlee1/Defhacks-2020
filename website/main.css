@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+html, body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.nav {
+  padding-top: 40px;
+}
+
+.logo {
+  margin-top: 20px;
+}
+
+.title {
+  margin-top: 40px;
+  margin-left: 10px;
+}
+
+.content{
+  padding-top: 40px;
+}
+
+.header{
+  font-size: 50px;
+  padding-top: 120px;
+  padding-left: 50px;
+}
+
+.sub-header {
+  color: #a6a6a6;
+  font-size: 30px;
+  padding-top: 40px;
+  padding-left: 50px;
+}
+
+.drawing-img {
+  width: 100%;
+  margin-top: 80px;
+}
+
+.begin-btn {
+  padding-top: 60px;
+  padding-left: 150px;
+}
+
+.begin-btn > a {
+  text-decoration: none;
+  padding: 12px 34px;
+  border-radius: 8px;
+  background-color: #943DFF;
+  font-size: 26px;
+  color: #fff;
+  margin-top: 50px;
+  /* padding-top: 50px;
+  border: 5px solid  #1D2021;
+  text-decoration: none;
+  border-radius: 10px;
+  background-color: #1D2021;
+  padding: 10px 50px;
+  color: #fff;
+  border-width: 3px; */
+}
+
+.begin-btn > a:hover {
+  background-color: #CA9EFF;
+  text-decoration: none;
+  color: #fff;
+  transition: .2s;
+}
+
+@media (max-width: 1200px){
+  .header {
+    font-size: 40px;
+  }
+  .sub-header {
+    font-size: 24px;
+  }
+  .begin-btn > a{
+    font-size: 24px;
+    padding: 10px 30px;
+  }
+  .content {
+    padding-top: 100px;
+  }
+}
+
+@media (max-width: 991px){
+  .nav {
+    padding-top: 20px;
+  }
+  .drawing-img {
+    margin-top: -100px;
+    width: 80%;
+    padding-left: 120px;
+  }
+  .text {
+    margin-top: -120px;
+    height: 600px;
+  }
+  .begin-btn{
+    padding-left: 230px;
+    padding-top: 60px;
+  }
+}
+
+@media (max-width: 770px){
+  .drawing-img {
+    margin-top: -80px;
+    width: 70%;
+    padding-left: 0px;
+    margin-left: 80px;
+  }
+  .text {
+    margin-top: -110px;
+    height: 600px;
+  }
+  .header{
+    font-size: 36px;
+  }
+  .sub-header{
+    font-size: 24px;
+    padding-top: 26px;
+  }
+  .begin-btn{
+    padding-left: 140px;
+    padding-top: 40px;
+  }
+}
+
+@media (max-width: 412px){
+ .drawing-img{
+   margin-left: 50px;
+   margin-top: -50px;
+ }
+ .header {
+   font-size: 24px;
+ }
+ .sub-header {
+  font-size: 16px;
+}
+.begin-btn > a{
+  font-size: 16px;
+  margin-left: -30px;
+}
+
+@media (max-width: 400px){
+ .begin-btn > a{
+   font-size: 16px;
+   margin-left: -42px;
+ }
+}
+
