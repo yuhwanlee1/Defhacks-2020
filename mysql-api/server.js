@@ -2,8 +2,11 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const db = require("./db.js")
 const fs = require("fs")
+var cors = require("cors")
 
 const app = express();
+
+app.use(cors())
 
 // parse requests of content-type: application/json
 app.use(bodyParser.json());

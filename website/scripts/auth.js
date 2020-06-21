@@ -17,21 +17,24 @@ auth.onAuthStateChanged(user => {
 const createForm = document.querySelector('#create-form');
 createForm.addEventListener('submit', (e) =>{
     e.preventDefault();
-
-    db.collection('guides').add({
-        item: createForm['item'].value,
-        amount: createForm['amount'].value,
-        urgency: createForm['urgency'].value,
-        department: createForm['department'].value
-    }).then(() =>{
-        //close the modal and reset form
-        const modal = document.querySelector('#modal-create');
-        M.Modal.getInstance(modal).close();
-        createForm.reset();
-    }).catch(err => {
-        console.log(err.message);
-    })
-
+    db.collection('users').doc(user.uid).get().then(doc => {
+        db.collection('guides').add({
+            item: createForm['item'].value,
+            amount: createForm['amount'].value,
+            urgency: createForm['urgency'].value,
+            department: createForm['department'].value,
+            hospital: doc.data().Hospital_Name,
+            'phone number': doc.data().Phone_Number,
+            name: doc.data().Name,
+        }).then(() =>{
+            //close the modal and reset form
+            const modal = document.querySelector('#modal-create');
+            M.Modal.getInstance(modal).close();
+            createForm.reset();
+        }).catch(err => {
+            console.log(err.message);
+        })
+    });
 })
 
 // signup
@@ -47,12 +50,18 @@ signupForm.addEventListener('submit', (e) => {
 
     //sign up the user
     auth.createUserWithEmailAndPassword(email, password).then(cred => {
-        return db.collection('users').doc(cred.user.uid).set({
-            Hospital_Name: signupForm['signup-Hospital-name'].value,
-            Registry_Link: signupForm['signup-link-worker-registry'].value,
-            Hospital_Department: signupForm['signup-Hospital-Department'].value,
-            Phone_Number: signupForm['signup-phone-number'].value,
-            Doc_Name: signupForm['signup-link-doc-name'].value
+        fetch('http://mednet.space:3000/phone/' + signupForm['signup-phone-number'].value)
+        .then(response => response.json())
+        .then(data => {
+            const hospital = data.hospital.split("_").map(x = x.charAt(0).toUpperCase()).join(" ")
+            return db.collection('users').doc(cred.user.uid).set({
+                Name: data.name,
+                Hospital_Name: hospital,
+                Registry_Link: signupForm['signup-link-worker-registry'].value,
+                Hospital_Department: data.department,
+                Phone_Number: signupForm['signup-phone-number'].value,
+                Doc_Name: signupForm['signup-link-doc-name'].value
+            });
         });
     }).then(() =>{
          // close the signup modal & reset form
