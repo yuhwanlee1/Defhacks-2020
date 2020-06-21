@@ -1,0 +1,86 @@
+
+  .centerbottom{
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+      }
+  .left {
+    display: flex;
+          justify-content: left;
+          align-items: absolute;
+  }
+  .heading{
+    font-size: 4rem;
+  }
+  p{
+      padding-top: 30px;
+      font-size: 2.25rem;
+  }
+  input{
+      width: 100%;
+  }
+  button {
+    width: 30%;
+    height: 4rem;
+    background-color: #FF8080;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 2.5rem;
+    margin: 4px 2px;
+    border-radius: 8px;
+  }
+  a{
+      color: #A760FF;
+  }
+  .hiddentitle{
+      visibility: hidden;
+  }
+  img{
+    width : 7rem; height: 7rem;
+  }
+
+  @media (max-width: 768px) {
+    body{
+        padding: 20px
+    }
+    .specialcenter{
+        justify-content: center;
+        align-items: center; 
+    }
+    .centerbottom{
+        padding-top: 10px;
+    }
+    .heading{
+        font-size: 2.5rem;
+    }
+    img{
+        width : 3rem; height: 3rem;
+    }
+    .hiddentitle{
+        visibility: visible;
+    }
+    .centerbottom{
+        display: flex;
+        justify-content: center;
+        align-items: absolute;
+    }
+    .left {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .title{
+        font-size: 4rem;
+    }
+    p{
+        padding-top: 30px;
+        font-size: 1.5rem;
+    }
+    button {
+        width: 60%;
+        font-size: 1.5rem;
+    }
+  }
