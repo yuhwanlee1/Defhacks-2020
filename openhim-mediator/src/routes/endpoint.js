@@ -71,7 +71,7 @@ module.exports = (_req, res) => {
       logger.info(`Sending put request to ${url}`)
       axios.put(url, entries)
         .then(function(response) {
-          logger.info(`Successfully updated table ${tableName}.`)
+          logger.info(`Successfully updated database.`)
           const returnObject = buildReturnObject(
             'Successful',
             200,
@@ -82,7 +82,7 @@ module.exports = (_req, res) => {
           res.send(returnObject)
         })
         .catch(function(err) {
-          logger.error(`Failed to update table ${tableName}.`)
+          logger.error(`Failed to update database.`)
           return reportFailure(err)
         })
     })

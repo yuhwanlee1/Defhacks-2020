@@ -9,6 +9,8 @@ var _xpath = _interopRequireDefault(require("xpath"));
 
 var _lodash = _interopRequireDefault(require("lodash"));
 
+var _phone = _interopRequireDefault(require("phone"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const Dom = require('xmldom').DOMParser;
@@ -54,7 +56,7 @@ function adapter(config) {
       const entry = {
         "department": dept,
         "name": name,
-        "phone": tels[0]
+        "phone": (0, _phone.default)(tels[0])[0]
       };
       return entry;
     }

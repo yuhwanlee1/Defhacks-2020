@@ -15,13 +15,23 @@ app.get("/", (req, res) => {
     res.json({ message: "Welcome to the MySQL phone number database API." });
 });
 
-app.get("/:facility", (req, res) => {
-    const facility = req.params.facility
-    const escaped = "`" + facility + "`"
-    const sql = "SELECT * FROM " + escaped
+app.get("/phone/:phone", (req, res) => {
+    const phone = req.params.phone
+    const sql = "SELECT * FROM contacts WHERE phone = " + db.escape(phone)
     db.query(sql, (err, response) => {
         if (err) {
-            res.status(500).send({message: "Failed to access table " + facility + "."})
+            res.status(500).end({message: "Unable to access database."})
+        }
+        res.send(response)
+    })
+})
+
+app.get("/:facility", (req, res) => {
+    const facility = req.params.facility
+    const sql = "SELECT * FROM contacts WHERE hospital = " + db.escape(facility)
+    db.query(sql, (err, response) => {
+        if (err) {
+            res.status(500).end({message: "Unable to access database."})
         }
         res.send(response)
     })
@@ -29,27 +39,21 @@ app.get("/:facility", (req, res) => {
 
 app.put("/:facility", (req, res) => {
     const facility = req.params.facility
-    const escaped = "`" + facility + "`"
-    let sql = "CREATE TABLE IF NOT EXISTS " + escaped + " (department VARCHAR(30), name VARCHAR(30), phone VARCHAR(16))"
+    let sql = "DELETE FROM contacts WHERE hospital = " + db.escape(facility)
     db.query(sql, (err, response) => {
         if (err) {
-            res.status(500).send({message: "Failed to create table " + facility + "."})
+            console.error(err)
+            res.status(500).end({message: "Failed to clear contacts from facility " + facility + "."})
         }
-        sql = "TRUNCATE TABLE " + escaped
-        db.query(sql, (err, response) => {
+        let data = req.body
+        data = data.map(data => [facility, data.department, data.name, data.phone])
+        sql = "INSERT INTO contacts (hospital, department, name, phone) VALUES ?"
+        db.query(sql, [data], (err, response) => {
             if (err) {
-                res.status(500).send({message: "Failed to clear table " + facility + "."})
+                console.error(err)
+                res.status(500).end({message: "Failed to append contacts to database."})
             }
-            let data = req.body
-            data = data.map(data => [data.department, data.name, data.phone])
-            sql = "INSERT INTO " + escaped + " (department, name, phone) VALUES ?"
-            db.query(sql, [data], (err, response) => {
-                if (err) {
-                    console.error(err)
-                    res.status(500).send({message: "Failed to edit table " + facility + "."})
-                }
-                res.end()
-            })
+            res.end()
         })
     })
 })

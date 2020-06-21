@@ -96,13 +96,13 @@ module.exports = (_req, res) => {
       _logger.default.info(`Sending put request to ${url}`);
 
       _axios.default.put(url, entries).then(function (response) {
-        _logger.default.info(`Successfully updated table ${tableName}.`);
+        _logger.default.info(`Successfully updated database.`);
 
         const returnObject = (0, _utils.buildReturnObject)('Successful', 200, 'Endpoint Response!', orchestrations);
         res.set('Content-Type', 'application/json+openhim');
         res.send(returnObject);
       }).catch(function (err) {
-        _logger.default.error(`Failed to update table ${tableName}.`);
+        _logger.default.error(`Failed to update database.`);
 
         return reportFailure(err);
       });

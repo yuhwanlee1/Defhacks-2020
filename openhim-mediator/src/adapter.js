@@ -1,6 +1,7 @@
 'use strict'
 import XPath from 'xpath'
 import _ from 'lodash'
+import phone from 'phone'
 
 const Dom = require('xmldom').DOMParser
 
@@ -37,7 +38,7 @@ export default function adapter(config) {
             const entry = {
                 "department": dept,
                 "name": name,
-                "phone": tels[0]
+                "phone": phone(tels[0])[0]
             }
             return entry
         }
