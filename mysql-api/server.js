@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const db = require("./db.js")
+const fs = require("fs")
 
 const app = express();
 
@@ -51,6 +52,29 @@ app.put("/:facility", (req, res) => {
             })
         })
     })
+})
+
+app.post('/documents/sample', function (req, res) {
+    fs.readFile('sampleHWR.txt', 'utf-8', (err, data) => { 
+        if (err) throw err;
+        let soap = `<soap:Envelope 
+        xmlns:soap="http://www.w3.org/2003/05/soap-envelope" 
+        xmlns:wsa="http://www.w3.org/2005/08/addressing" 
+        xmlns:csd="urn:ihe:iti:csd:2013"> 
+        <soap:Header>
+        <wsa:Action soap:mustUnderstand="1" >urn:ihe:iti:csd:2013:GetDirectoryModificationsResponse</wsa:Action>
+        <wsa:MessageID>urn:uuid:{random:uuid()}</wsa:MessageID>
+        <wsa:To soap:mustUnderstand="1">http://www.w3.org/2005/08/addressing/anonymous</wsa:To> 
+        </soap:Header>
+        <soap:Body>
+        <csd:getModificationsResponse>
+            ${data}
+        </csd:getModificationsResponse>
+        </soap:Body>
+        </soap:Envelope>`
+        res.type('application/soap+xml')
+        res.status(200).send(soap)
+    }) 
 })
 
 // set port, listen for requests
