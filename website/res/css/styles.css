@@ -1,0 +1,151 @@
+    html, body {
+      overflow: hidden;
+    }
+    .center{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+    .left {
+      display: flex;
+			justify-content: left;
+			align-items: center;
+    }
+    .title{
+      font-size: 4rem;
+    }
+    .navbarleft{
+      display: flex;
+			justify-content: left;
+			align-items: center;
+    }
+    /* .hero{
+        background-image: linear-gradient(to top right, #7CE3FD, #431EFF);
+    } */
+    .navadjust{
+      width: 200px;
+      padding: 20px;
+    }
+    .navadjust:hover {
+      background-color:transparent;
+      text-decoration: underline;
+      text-decoration-color: black;
+    }
+    .navbar-item:hover{
+      color: black;
+    }
+    .desc{
+      font-size: 60px;
+      color: black;
+      width: 60%;
+    }
+    .desc2{
+      font-size: 40px;
+      color: black;
+      width: 60%;
+      opacity: 0.62;
+    }
+    .buttonclass{
+      font-size: 25px;
+      border: white;
+      height: 5rem;
+      color: white;
+      background-color: #8A2BE7;
+    }
+    #a { grid-area: a; }
+    #b { grid-area: b; }
+    #grid {
+        display: grid;
+        grid-template-areas:
+    			"a b";
+        grid-row-gap: 3.5rem;
+
+    }
+    #a{
+      padding-left: 100px;
+      padding-top: 30px;
+    }
+    #b{
+       width : 1000px; height: 600px;
+    }
+    #buttondiv{
+      width: 100%;
+      padding-top: 40px;
+    }
+    #laptopFigure{
+      width: 100%;
+      height: 100%;
+    }
+    #laptopImage{
+      width: 100%;
+      height: 100%;
+    }
+    @media (max-width: 1024px) {
+      .navbarleft{
+        padding-left: 0px;
+      }
+      .navadjust{
+        width: 180px;
+        padding: 8px;
+      }
+    }
+    @media (max-width: 1000px) {
+        #grid {
+            grid-template-areas:
+                "a"
+                "b";
+
+    						grid-row-gap: 1rem;
+        }
+        html, body {
+          overflow: auto;
+        }
+        #a{
+          padding-left: 0px;
+          width: inherit;
+        }
+        .desc{
+          font-size: 30px;
+          color: black;
+          width: inherit;
+          white-space: normal;
+          text-align: center
+        }
+        .desc2{
+          font-size: 25px;
+          color: black;
+          width: inherit;
+          opacity: 0.62;
+          text-align: center
+        }
+        #buttondiv{
+          width: inherit;
+        }
+        #laptopFigure{
+          width: 20rem;
+          height: 20rem;
+        }
+        #laptopImage{
+          width: 100%;
+          height: 100%;
+        }
+        #b{
+          width: inherit;
+        }
+        .navadjust{
+          width: 100%;
+        }
+        .left {
+    			justify-content: center;
+    			align-items: center;
+        }
+        .navbarleft{
+          display:inline-block;
+          justify-content:center;
+    			align-items: center;
+          width: 100%
+        }
+        h1{
+          text-align: center;
+        }
+    }
