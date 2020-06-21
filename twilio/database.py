@@ -8,15 +8,16 @@ def store_request(name, phone_number, request, hospital, department):
     db = firestore.Client().from_service_account_json("defHacks-e389c283f718.json")
 
     # request format: item, amount, urgency
-    item, amount, urgency = request.split("/")
+    item, amount, urgency, date = request.split("/")
 
-    document_reference = db.collection("requests").document(hospital)
+    document_reference = db.collection("guides").document()
     document_reference.set({
         "name": name,
         "phone number": phone_number,
         "item": item,
         "amount": amount,
         "urgency": urgency,
+        "date": date,
         "hospital": hospital,
         "department": department
     })
