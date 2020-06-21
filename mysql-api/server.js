@@ -58,6 +58,14 @@ app.put("/:facility", (req, res) => {
     })
 })
 
+app.get('/documents/sample', function (req, res) {
+    fs.readFile('sampleHWR.txt', 'utf-8', (err, data) => {
+        if (err) throw err;
+        res.type('application/xml')
+        res.status(200).send(data)
+    })
+})
+
 app.post('/documents/sample', function (req, res) {
     fs.readFile('sampleHWR.txt', 'utf-8', (err, data) => { 
         if (err) throw err;
