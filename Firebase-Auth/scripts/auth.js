@@ -19,8 +19,10 @@ createForm.addEventListener('submit', (e) =>{
     e.preventDefault();
 
     db.collection('guides').add({
-        title: createForm['title'].value,
-        content: createForm['content'].value
+        item: createForm['item'].value,
+        amount: createForm['amount'].value,
+        urgency: createForm['urgency'].value,
+        department: createForm['department'].value
     }).then(() =>{
         //close the modal and reset form
         const modal = document.querySelector('#modal-create');

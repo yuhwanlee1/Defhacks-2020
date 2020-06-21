@@ -35,8 +35,12 @@ const setupGuides = (data) => {
             const guide = doc.data();
             const li = `
       <li>
-        <div class="collapsible-header grey lighten-4"> ${guide.title} </div>
-        <div class="collapsible-body white"> ${guide.content} </div>
+        <div class="collapsible-header grey lighten-4"> ${guide.item} </div>
+        <div class="collapsible-body white"> ${guide.amount} </div>
+        <div class="collapsible-body white"> ${guide.department} </div>
+        <div class="collapsible-body white"> ${guide.hospital} </div>
+        <div class="collapsible-body white"> ${guide.name} </div>
+        <div class="collapsible-body white"> ${guide['phone number']} </div>
       </li>
     `;
             html += li;
@@ -44,7 +48,7 @@ const setupGuides = (data) => {
 
         guideList.innerHTML = html;
     } else {
-        guideList.innerHTML = '<h5 class="center-align">Login to view guides</h5>';
+        guideList.innerHTML = '<h5 class="center-align">Login to view requests</h5>';
     }
 
 }

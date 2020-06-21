@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <title>Game Guidez</title>
+    <title>Mednet</title>
 </head>
 
 <body class=" grey lighten-3">
@@ -23,7 +23,7 @@
                     <a href="#" class="grey-text" id="logout">Logout</a>
                 </li>
                 <li class="logged-in" style="display: none;">
-                    <a href="#" class="grey-text modal-trigger" data-target="modal-create">Create Guide</a>
+                    <a href="#" class="grey-text modal-trigger" data-target="modal-create">Create Requests</a>
                 </li>
                 <li class="logged-out" style="display: none;">
                     <a href="#" class="grey-text modal-trigger" data-target="modal-login">Login</a>
@@ -91,18 +91,26 @@
         </div>
     </div>
 
-    <!-- CREATE GUIDE MODAL -->
+    <!-- CREATE REQUESTS MODAL -->
     <div id="modal-create" class="modal">
         <div class="modal-content">
-            <h4>Create Guide</h4><br />
+            <h4>Create Request</h4><br/>
             <form id="create-form">
                 <div class="input-field">
-                    <input type="text" id="title" required>
-                    <label for="title">Guide Title</label>
+                    <input type="text" id="item" required>
+                    <label for="item">Item</label>
                 </div>
                 <div class="input-field">
-                    <textarea id="content" class="materialize-textarea" required></textarea>
-                    <label for="content">Guide Content</label>
+                    <textarea id="amount" class="materialize-textarea" required></textarea>
+                    <label for="amount">Amount of Item</label>
+                </div>
+                <div class="input-field">
+                    <textarea id="urgency" class="materialize-textarea" required></textarea>
+                    <label for="urgency">Urgency (1 - 5)</label>
+                </div>
+                <div class="input-field">
+                    <textarea id="department" class="materialize-textarea" required></textarea>
+                    <label for="department">Hospital Department</label>
                 </div>
                 <button class="btn yellow darken-2 z-depth-0">Create</button>
             </form>
