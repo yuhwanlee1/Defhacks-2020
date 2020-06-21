@@ -9,6 +9,8 @@ def store_request(name, phone_number, request, hospital, department):
     # request format: item, amount, urgency
     item, amount, urgency = request.split("/")
 
+    hospital = " ".join([word.capitalize() for word in hospital.split("_")])
+
     document_reference = db.collection("guides").document()
     document_reference.set({
         "name": name,
