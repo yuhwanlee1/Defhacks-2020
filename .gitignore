@@ -1,1 +1,4 @@
 node_modules/
+credentials.py
+*.pyc
+defHacks-e389c283f718.json
