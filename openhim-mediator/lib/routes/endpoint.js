@@ -47,7 +47,7 @@ module.exports = (_req, res) => {
       res.end(response);
     }
 
-    _logger.default.info('Pulling providers from OpenInfoMan...');
+    _logger.default.info('Pulling facilties from OpenInfoMan...');
 
     OIM.fetchAllEntities((err, CSDDoc, orchs) => {
       if (orchs) {
@@ -62,7 +62,7 @@ module.exports = (_req, res) => {
         return reportFailure(new Error('No CSD document returned.'));
       }
 
-      _logger.default.info('Done fetching providers.'); //extract CSD entities
+      _logger.default.info('Done fetching facilities.'); //extract CSD entities
 
 
       const doc = new _xmldom.DOMParser().parseFromString(CSDDoc); //console.log(doc)
@@ -71,7 +71,7 @@ module.exports = (_req, res) => {
         'csd': 'urn:ihe:iti:csd:2013'
       });
 
-      let entities = select('/csd:CSD/csd:providerDirectory/csd:provider', doc);
+      let entities = select('/csd:CSD/csd:facilityDirectory/csd:facility', doc);
       entities = entities.map(entity => entity.toString());
 
       _logger.default.info(`Converting ${entities.length} CSD entities to database entries...`);
@@ -80,7 +80,7 @@ module.exports = (_req, res) => {
         try {
           return adapter.convertCSDToDBEntry(entity);
         } catch (err) {
-          _logger.default.warn(`${err.message}, skipping provider.`);
+          _logger.default.warn(`${err.message}, skipping facility.`);
 
           return null;
         }

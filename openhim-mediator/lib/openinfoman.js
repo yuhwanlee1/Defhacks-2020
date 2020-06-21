@@ -23,7 +23,7 @@ function openinfoman(cfg) {
      * @param {function} callback : takes the form of callback(err, result, orchestrations)
      */
     fetchAllEntities: function (callback) {
-      let URI = new _urijs.default(config.url).segment('CSD/csr').segment(config.queryDocument).segment('careServicesRequest').segment('/urn:ihe:iti:csd:2014:stored-function:provider-search');
+      let URI = new _urijs.default(config.url).segment('CSD/csr').segment(config.queryDocument).segment('careServicesRequest').segment('/urn:ihe:iti:csd:2014:stored-function:facility-search');
       let username = config.username;
       let password = config.password;
       let auth = "Basic " + new Buffer(username + ":" + password).toString("base64");

@@ -26,26 +26,33 @@ function adapter(config) {
       entity = entity.replace(/.xmlns.*?\"(.*?)\"/g, '');
       const doc = new Dom().parseFromString(entity);
 
-      const uuid = _xpath.default.select('/provider/@entityID', doc)[0].value;
+      const uuid = _xpath.default.select('/facility/@entityID', doc)[0].value;
 
-      const name = _xpath.default.select('/provider/demographic/name/commonName/text()', doc)[0].toString();
+      const dept = _xpath.default.select('/facility/primaryName/text()', doc)[0].toString();
 
-      const telNodes = _xpath.default.select('/provider/demographic/contactPoint/codedType[@code="BP" and @codingScheme="urn:ihe:iti:csd:2013:contactPoint"]/text()', doc);
+      const name = _xpath.default.select('/facility/contact/person/name/commonName/text()', doc)[0].toString();
+
+      const telNodes = _xpath.default.select('/facility/contactPoint/codedType[@code="BP" and @codingScheme="urn:ihe:iti:csd:2013:contactPoint"]/text()', doc);
 
       let tels = [];
       telNodes.forEach(telNode => {
         tels.push(telNode.toString());
       });
 
+      if (dept == null || dept == undefined || dept === "") {
+        throw new Error(`Couldn\'t find a name for the facility with UUID ${uuid}`);
+      }
+
       if (name == null || name == undefined || name === "") {
-        throw new Error(`Couldn\'t find a name for provider with UUID ${uuid}`);
+        throw new Error(`Couldn\'t find a provider associated with the facility with UUID ${uuid}`);
       }
 
       if (tels.length === 0) {
-        throw new Error(`Couldn\'t find a telephone number for ${name}`);
+        throw new Error(`Couldn\'t find a telephone number for the facility with UUID ${uuid}`);
       }
 
       const entry = {
+        "department": dept,
         "name": name,
         "phone": tels[0]
       };

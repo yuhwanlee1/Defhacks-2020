@@ -35,7 +35,7 @@ module.exports = (_req, res) => {
       res.end(response)
     }
 
-    logger.info('Pulling providers from OpenInfoMan...')
+    logger.info('Pulling facilties from OpenInfoMan...')
     OIM.fetchAllEntities((err, CSDDoc, orchs) => {
       if (orchs) {
         orchestrations = orchestrations.concat(orchs)
@@ -46,20 +46,20 @@ module.exports = (_req, res) => {
       if (!CSDDoc) {
         return reportFailure(new Error('No CSD document returned.'))
       }
-      logger.info('Done fetching providers.')
+      logger.info('Done fetching facilities.')
 
       //extract CSD entities
       const doc = new DOMParser().parseFromString(CSDDoc)
       //console.log(doc)
       const select = XPath.useNamespaces({ 'csd': 'urn:ihe:iti:csd:2013' })
-      let entities = select('/csd:CSD/csd:providerDirectory/csd:provider', doc)
+      let entities = select('/csd:CSD/csd:facilityDirectory/csd:facility', doc)
       entities = entities.map((entity) => entity.toString())
       logger.info(`Converting ${entities.length} CSD entities to database entries...`)
       let entries = entities.map((entity) => {
         try {
           return adapter.convertCSDToDBEntry(entity)
         } catch (err) {
-          logger.warn(`${err.message}, skipping provider.`)
+          logger.warn(`${err.message}, skipping facility.`)
           return null
         }
       }).filter((c) => {

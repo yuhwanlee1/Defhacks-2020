@@ -30,7 +30,7 @@ app.get("/:facility", (req, res) => {
 app.put("/:facility", (req, res) => {
     const facility = req.params.facility
     const escaped = "`" + facility + "`"
-    let sql = "CREATE TABLE IF NOT EXISTS " + escaped + " (name VARCHAR(30), phone VARCHAR(16))"
+    let sql = "CREATE TABLE IF NOT EXISTS " + escaped + " (department VARCHAR(30), name VARCHAR(30), phone VARCHAR(16))"
     db.query(sql, (err, response) => {
         if (err) {
             res.status(500).send({message: "Failed to create table " + facility + "."})
@@ -41,8 +41,8 @@ app.put("/:facility", (req, res) => {
                 res.status(500).send({message: "Failed to clear table " + facility + "."})
             }
             let data = req.body
-            data = data.map(data => [data.name, data.phone])
-            sql = "INSERT INTO " + escaped + " (name, phone) VALUES ?"
+            data = data.map(data => [data.department, data.name, data.phone])
+            sql = "INSERT INTO " + escaped + " (department, name, phone) VALUES ?"
             db.query(sql, [data], (err, response) => {
                 if (err) {
                     console.error(err)

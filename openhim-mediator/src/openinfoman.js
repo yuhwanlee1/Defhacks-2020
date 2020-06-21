@@ -16,7 +16,7 @@ export default function openinfoman(cfg) {
          */
         fetchAllEntities: function (callback) {
             let URI = new _URI(config.url).segment('CSD/csr').segment(config.queryDocument)
-                .segment('careServicesRequest').segment('/urn:ihe:iti:csd:2014:stored-function:provider-search')
+                .segment('careServicesRequest').segment('/urn:ihe:iti:csd:2014:stored-function:facility-search')
 
             let username = config.username
             let password = config.password
