@@ -50,6 +50,8 @@ signupForm.addEventListener('submit', (e) => {
         return db.collection('users').doc(cred.user.uid).set({
             Hospital_Name: signupForm['signup-Hospital-name'].value,
             Registry_Link: signupForm['signup-link-worker-registry'].value,
+            Hospital_Department: signupForm['signup-Hospital-Department'].value,
+            Phone_Number: signupForm['signup-phone-number'].value,
             Doc_Name: signupForm['signup-link-doc-name'].value
         });
     }).then(() =>{

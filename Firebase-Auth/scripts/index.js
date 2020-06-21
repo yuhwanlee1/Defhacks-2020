@@ -10,6 +10,8 @@ const setupUI = (user) => {
             const html = `
         <div>Logged in as ${user.email}</div>
         <div>${doc.data().Hospital_Name}</div>
+        <div>${doc.data().Hospital_Department}</div>
+        <div>${doc.data().Phone_Number}</div>
         <div>${doc.data().Registry_Link}</div>
         <div>${doc.data().Doc_Name}</div>
       `;
@@ -35,7 +37,7 @@ const setupGuides = (data) => {
             const guide = doc.data();
             const li = `
       <li>
-        <div class="collapsible-header grey lighten-4"> ${guide.item} </div>
+        <div class="collapsible-header grey lighten-4"> ${guide.item} (${guide.amount}) </div>
         <div class="collapsible-body white"> ${guide.amount} </div>
         <div class="collapsible-body white"> ${guide.department} </div>
         <div class="collapsible-body white"> ${guide.hospital} </div>
