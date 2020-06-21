@@ -7,7 +7,7 @@ def store_request(name, phone_number, request, hospital, department):
     db = firestore.Client().from_service_account_json("defHacks-e389c283f718.json")
 
     # request format: item, amount, urgency
-    item, amount, urgency = request.split("/")
+    item, amount, urgency, date = request.split("/")
 
     hospital = " ".join([word.capitalize() for word in hospital.split("_")])
 
@@ -18,6 +18,7 @@ def store_request(name, phone_number, request, hospital, department):
         "item": item,
         "amount": amount,
         "urgency": urgency,
+        "date": date,
         "hospital": hospital,
         "department": department,
     })
