@@ -76,7 +76,7 @@ const setupGuides = (data) => {
         <div class="collapsible-body white"> <strong>Requester Name:</strong> ${guide.name} </div>
         <div class="collapsible-body white"> <strong>Requester Phone Number:</strong> ${guide['phone number']} </div>
         <div class="collapsible-body white"> <strong>Urgency of Request:</strong> ${guide.urgency} </div>
-        <div style="font-size: 18px;" class="collapsible-body white"><a href="sms://${guide['phone number']}" ><strong>Fufill This Request</strong></a></div>
+        <div style="font-size: 18px;" class="collapsible-body white"><a href="sms:+${guide['phone number']}" ><strong>Fufill This Request</strong></a></div>
       </li>
     `;
             html += li;
