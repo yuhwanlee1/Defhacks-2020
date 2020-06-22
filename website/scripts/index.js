@@ -37,19 +37,27 @@ const setupGuides = (data) => {
         data.forEach(doc => {
             const guide = doc.data();
             var num = parseInt(guide.urgency, 10);
-            var point = "";
-            var text = "<i class='material-icons'>warning</i>";
-            for(var i = 0; i < num; i++){
-                point+=text;
+            var text = "";
+            if (num == 1){
+                text = "<i style='color: #FFDD00;' class='material-icons'>warning</i>";
+            } else if (num == 2){
+                text = "<i style='color: #FFA600;' class='material-icons'>warning</i>";
+            } else if (num == 3){
+                text = "<i style='color: #FF6F00;' class='material-icons'>warning</i>";
+            } else if (num == 4){
+                text = "<i style='color: #FF3700;' class='material-icons'>warning</i>";
+            } else {
+                text = "<i style='color: #FF0000;' class='material-icons'>warning</i>";
             }
             const li = `
       <li>
-        <div class="collapsible-header grey lighten-4"> <strong>${guide.item}</strong>&nbsp;(${guide.amount}) ${point} </div>
+        <div style="font-size: 20px;" class="collapsible-header grey lighten-4"> ${text} <strong>${guide.item}</strong>&nbsp;(${guide.amount}) </div>
         <div class="collapsible-body white"> <strong>Department Name:</strong> ${guide.department} </div>
         <div class="collapsible-body white"> <strong>Hospital Name:</strong> ${guide.hospital} </div>
         <div class="collapsible-body white"> <strong>Requester Name:</strong> ${guide.name} </div>
         <div class="collapsible-body white"> <strong>Requester Phone Number:</strong> ${guide['phone number']} </div>
         <div class="collapsible-body white"> <strong>Urgency of Request:</strong> ${guide.urgency} </div>
+        <div style="font-size: 18px;" class="collapsible-body white"><a href="" ><strong>Fufill This Request</strong></a></div>
       </li>
     `;
             html += li;
@@ -72,7 +80,3 @@ document.addEventListener('DOMContentLoaded', function () {
     M.Collapsible.init(items);
 
 });
-
-
-
-
