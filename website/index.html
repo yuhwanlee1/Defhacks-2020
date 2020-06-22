@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="favicon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>MedNet</title>
 </head>
 
-<body class=" grey lighten-3">
+<body class="#e3f2fd lighten-5">
 
     <!-- NAVBAR -->
-    <nav class="z-depth-0 grey lighten-4">
-        <div class="nav-wrapper container">
-            <a href="#" class="brand-logo">
-                <img src="img/logo.svg" style="width: 180px; margin-top: 10px;">
+    <nav class="z-depth-0 white lighten-4">
+        <div style="margin-top: 40px;" class="nav-wrapper container">
+            <a href="main.html" class="brand-logo">
+                <img src="images/small-logo.svg" style="width: 180px; margin-top: 10px;">
             </a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li class="logged-in" style="display: none;">
@@ -112,13 +114,15 @@
                     <textarea id="department" class="materialize-textarea" required></textarea>
                     <label for="department">Hospital Department</label>
                 </div>
-                <button class="btn yellow darken-2 z-depth-0">Create</button>
+                <button class="btn darken-2 z-depth-0">Create</button>
             </form>
         </div>
     </div>
 
     <!-- GUIDE LIST -->
     <div class="container" style="margin-top: 40px;">
+        <h2 style="text-align: center; margin-bottom: 10px;">All Current Requests</h2>
+        <h5 style="text-align: center; margin-bottom: 40px; color: #a6a6a6">A dynamic list of materails needed by hospitals around the globe</h5>
         <ul class="collapsible z-depth-0 guides" style="border: none;">
 
         </ul>

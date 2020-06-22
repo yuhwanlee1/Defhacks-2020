@@ -36,14 +36,20 @@ const setupGuides = (data) => {
         let html = '';
         data.forEach(doc => {
             const guide = doc.data();
+            var num = parseInt(guide.urgency, 10);
+            var point = "";
+            var text = "<i class='material-icons'>warning</i>";
+            for(var i = 0; i < num; i++){
+                point+=text;
+            }
             const li = `
       <li>
-        <div class="collapsible-header grey lighten-4"> ${guide.item} (${guide.amount}) </div>
-        <div class="collapsible-body white"> ${guide.amount} </div>
-        <div class="collapsible-body white"> ${guide.department} </div>
-        <div class="collapsible-body white"> ${guide.hospital} </div>
-        <div class="collapsible-body white"> ${guide.name} </div>
-        <div class="collapsible-body white"> ${guide['phone number']} </div>
+        <div class="collapsible-header grey lighten-4"> <strong>${guide.item}</strong>&nbsp;(${guide.amount}) ${point} </div>
+        <div class="collapsible-body white"> <strong>Department Name:</strong> ${guide.department} </div>
+        <div class="collapsible-body white"> <strong>Hospital Name:</strong> ${guide.hospital} </div>
+        <div class="collapsible-body white"> <strong>Requester Name:</strong> ${guide.name} </div>
+        <div class="collapsible-body white"> <strong>Requester Phone Number:</strong> ${guide['phone number']} </div>
+        <div class="collapsible-body white"> <strong>Urgency of Request:</strong> ${guide.urgency} </div>
       </li>
     `;
             html += li;
@@ -66,3 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
     M.Collapsible.init(items);
 
 });
+
+
+
+
