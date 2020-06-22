@@ -13,19 +13,29 @@ auth.onAuthStateChanged(user => {
     }
 });
 
+function formatDate() {
+    let date = new Date()
+    let output = ''
+    output += (date.getHours() + ':' + date.getMinutes() + ' ')
+    output += ((date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear() + ' EST')
+    return output
+}
+
 //create new guide
 const createForm = document.querySelector('#create-form');
 createForm.addEventListener('submit', (e) =>{
     e.preventDefault();
+    let user = auth.currentUser;
     db.collection('users').doc(user.uid).get().then(doc => {
         db.collection('guides').add({
             item: createForm['item'].value,
             amount: createForm['amount'].value,
             urgency: createForm['urgency'].value,
-            department: createForm['department'].value,
+            department: doc.data().Hospital_Department,
             hospital: doc.data().Hospital_Name,
             'phone number': doc.data().Phone_Number,
             name: doc.data().Name,
+            date: formatDate()
         }).then(() =>{
             //close the modal and reset form
             const modal = document.querySelector('#modal-create');
@@ -51,10 +61,18 @@ signupForm.addEventListener('submit', (e) => {
     //sign up the user
     auth.createUserWithEmailAndPassword(email, password).then(cred => {
         fetch('http://mednet.space:3000/phone/' + signupForm['signup-phone-number'].value)
-        .then(response => response.json())
+        .then(response => {
+            if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                  response.status);
+                return;
+            }
+            return response.json()
+        })
         .then(data => {
-            const hospital = data.hospital.split("_").map(x = x.charAt(0).toUpperCase()).join(" ")
-            return db.collection('users').doc(cred.user.uid).set({
+            data = data[0]
+            const hospital = data.hospital.split("_").map(x => x.charAt(0).toUpperCase() + x.slice(1)).join(" ")
+            db.collection('users').doc(cred.user.uid).set({
                 Name: data.name,
                 Hospital_Name: hospital,
                 Registry_Link: signupForm['signup-link-worker-registry'].value,
@@ -62,15 +80,14 @@ signupForm.addEventListener('submit', (e) => {
                 Phone_Number: signupForm['signup-phone-number'].value,
                 Doc_Name: signupForm['signup-link-doc-name'].value
             });
+
+            const modal = document.querySelector('#modal-signup');
+            M.Modal.getInstance(modal).close();
+            signupForm.reset();
+
+            return;
         });
-    }).then(() =>{
-         // close the signup modal & reset form
-         const modal = document.querySelector('#modal-signup');
-         M.Modal.getInstance(modal).close();
-         signupForm.reset();
     });
-
-
 });
 
 //logout
