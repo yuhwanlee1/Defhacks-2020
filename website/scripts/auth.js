@@ -1,10 +1,10 @@
 //listen for auth status changes
 auth.onAuthStateChanged(user => {
     if (user) {
-        db.collection('guides').onSnapshot(snapshot => {
+        db.collection('guides').orderBy('urgency', 'desc').onSnapshot(snapshot => {
             setupGuides(snapshot.docs)
             setupUI(user);
-        }, err =>{
+        }, err => {
             console.log(err.message);
         });
     } else {
@@ -23,7 +23,7 @@ function formatDate() {
 
 //create new guide
 const createForm = document.querySelector('#create-form');
-createForm.addEventListener('submit', (e) =>{
+createForm.addEventListener('submit', (e) => {
     e.preventDefault();
     let user = auth.currentUser;
     db.collection('users').doc(user.uid).get().then(doc => {
@@ -36,7 +36,7 @@ createForm.addEventListener('submit', (e) =>{
             'phone number': doc.data().Phone_Number,
             name: doc.data().Name,
             date: formatDate()
-        }).then(() =>{
+        }).then(() => {
             //close the modal and reset form
             const modal = document.querySelector('#modal-create');
             M.Modal.getInstance(modal).close();
@@ -52,6 +52,10 @@ const signupForm = document.querySelector('#signup-form');
 signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
+    if (!validate(signupForm['signup-phone-number'].value)) {
+        alert("Please input a valid phone number in E.164 format.")
+        return;
+    }
     //get user info
     const email = signupForm['signup-email'].value;
     const password = signupForm['signup-password'].value;
@@ -61,38 +65,47 @@ signupForm.addEventListener('submit', (e) => {
     //sign up the user
     auth.createUserWithEmailAndPassword(email, password).then(cred => {
         fetch('http://mednet.space:3000/phone/' + signupForm['signup-phone-number'].value)
-        .then(response => {
-            if (response.status !== 200) {
-                console.log('Looks like there was a problem. Status Code: ' +
-                  response.status);
+            .then(response => {
+                if (response.status !== 200) {
+                    console.log('Looks like there was a problem. Status Code: ' +
+                        response.status);
+                    return;
+                }
+                return response.json()
+            })
+            .then(data => {
+                data = data[0]
+                const hospital = data.hospital.split("_").map(x => x.charAt(0).toUpperCase() + x.slice(1)).join(" ")
+                db.collection('users').doc(cred.user.uid).set({
+                    Name: data.name,
+                    Hospital_Name: hospital,
+                    Registry_Link: signupForm['signup-link-worker-registry'].value,
+                    Hospital_Department: data.department,
+                    Phone_Number: signupForm['signup-phone-number'].value,
+                    Doc_Name: signupForm['signup-link-doc-name'].value
+                });
+
+                const modal = document.querySelector('#modal-signup');
+                M.Modal.getInstance(modal).close();
+                signupForm.reset();
+
                 return;
-            }
-            return response.json()
-        })
-        .then(data => {
-            data = data[0]
-            const hospital = data.hospital.split("_").map(x => x.charAt(0).toUpperCase() + x.slice(1)).join(" ")
-            db.collection('users').doc(cred.user.uid).set({
-                Name: data.name,
-                Hospital_Name: hospital,
-                Registry_Link: signupForm['signup-link-worker-registry'].value,
-                Hospital_Department: data.department,
-                Phone_Number: signupForm['signup-phone-number'].value,
-                Doc_Name: signupForm['signup-link-doc-name'].value
             });
-
-            const modal = document.querySelector('#modal-signup');
-            M.Modal.getInstance(modal).close();
-            signupForm.reset();
-
-            return;
-        });
     });
 });
 
+function validate(phone) {
+    var regex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
+
+    if (regex.test(phone)) {
+        return true;
+    }
+    return false;
+}
+
 //logout
 const logout = document.querySelector('#logout');
-logout.addEventListener('click', (e) =>{
+logout.addEventListener('click', (e) => {
     e.preventDefault();
     auth.signOut();
 });
@@ -101,19 +114,19 @@ logout.addEventListener('click', (e) =>{
 // Login
 const loginForm = document.querySelector('#login-form');
 loginForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  
-  // get user info
-  const email = loginForm['login-email'].value;
-  const password = loginForm['login-password'].value;
+    e.preventDefault();
 
-  // log the user in
-  auth.signInWithEmailAndPassword(email, password).then((cred) => {
-    console.log(cred.user);
-    // close the signup modal & reset form
-    const modal = document.querySelector('#modal-login');
-    M.Modal.getInstance(modal).close();
-    loginForm.reset();
-  });
+    // get user info
+    const email = loginForm['login-email'].value;
+    const password = loginForm['login-password'].value;
+
+    // log the user in
+    auth.signInWithEmailAndPassword(email, password).then((cred) => {
+        console.log(cred.user);
+        // close the signup modal & reset form
+        const modal = document.querySelector('#modal-login');
+        M.Modal.getInstance(modal).close();
+        loginForm.reset();
+    });
 
 });

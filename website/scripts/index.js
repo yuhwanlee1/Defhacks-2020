@@ -5,22 +5,40 @@ const accountDetails = document.querySelector('.account-details');
 
 const setupUI = (user) => {
     if (user) {
-        // account info
         db.collection('users').doc(user.uid).get().then(doc => {
-            const html = `
-        <div>Logged in as ${user.email}</div>
-        <div>${doc.data().Name}</div>
-        <div>${doc.data().Hospital_Name}</div>
-        <div>${doc.data().Hospital_Department}</div>
-        <div>${doc.data().Phone_Number}</div>
-        <div>${doc.data().Registry_Link}</div>
-        <div>${doc.data().Doc_Name}</div>
-      `;
-            accountDetails.innerHTML = html;
-        });
-        // toggle user UI elements
-        loggedInLinks.forEach(item => item.style.display = 'block');
-        loggedOutLinks.forEach(item => item.style.display = 'none');
+            const phone = doc.data().Phone_Number
+            fetch('http://mednet.space:3000/phone/' + phone)
+            .then(response => {
+                if (response.status !== 200) {
+                    console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                    return;
+                }
+                return response.json()
+            })
+            .then(data => {
+                data = data[0]
+                const hospital = data.hospital.split("_").map(x => x.charAt(0).toUpperCase() + x.slice(1)).join(" ")
+                db.collection('users').doc(user.uid).update({
+                    Name: data.name,
+                    Hospital_Name: hospital,
+                    Hospital_Department: data.department,
+                });
+                    const html = `
+                <div style="color: #777; font-size: 24px;"><strong style="color: #555" >Email:</strong> ${user.email}</div><br>
+                <div style="color: #777; font-size: 24px;"><strong style="color: #555" >Name:</strong> ${data.name}</div><br>
+                <div style="color: #777; font-size: 24px;"><strong style="color: #555" >Hospital Name: </strong>${hospital}</div><br>
+                <div style="color: #777; font-size: 24px;"><strong style="color: #555" >Hospital Department:</strong> ${data.department}</div><br>
+                <div style="color: #777; font-size: 24px;"><strong style="color: #555" >Phone Number:</strong> ${phone}</div><br>
+                <div style="color: #777; font-size: 24px;"><strong style="color: #555" >Registry Link:</strong> ${doc.data().Registry_Link}</div><br>
+                <div style="color: #777; font-size: 24px;"><strong style="color: #555" >Document Name:</strong> ${doc.data().Doc_Name}</div><br>
+                `;
+                accountDetails.innerHTML = html;
+                // toggle user UI elements
+                loggedInLinks.forEach(item => item.style.display = 'block');
+                loggedOutLinks.forEach(item => item.style.display = 'none');
+            });
+        })
     } else {
         // clear account info
         accountDetails.innerHTML = '';
@@ -57,7 +75,7 @@ const setupGuides = (data) => {
         <div class="collapsible-body white"> <strong>Requester Name:</strong> ${guide.name} </div>
         <div class="collapsible-body white"> <strong>Requester Phone Number:</strong> ${guide['phone number']} </div>
         <div class="collapsible-body white"> <strong>Urgency of Request:</strong> ${guide.urgency} </div>
-        <div style="font-size: 18px;" class="collapsible-body white"><a href="" ><strong>Fufill This Request</strong></a></div>
+        <div style="font-size: 18px;" class="collapsible-body white"><a href="sms://${guide['phone number']}" ><strong>Fufill This Request</strong></a></div>
       </li>
     `;
             html += li;
