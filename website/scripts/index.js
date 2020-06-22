@@ -7,7 +7,6 @@ const setupUI = (user) => {
 
     if (user) {
         db.collection('users').doc(user.uid).get().then(doc => {
-<<<<<<< HEAD
             const phone = doc.data().Phone_Number
             fetch('http://mednet.space:3000/phone/' + phone)
             .then(response => {
@@ -41,22 +40,6 @@ const setupUI = (user) => {
                 loggedOutLinks.forEach(item => item.style.display = 'none');
             });
         })
-=======
-            const html = `
-            <div style="color: #777; font-size: 24px;"><strong style="color: #555" >Email:</strong> ${user.email}</div><br>
-            <div style="color: #777; font-size: 24px;"><strong style="color: #555" >Name:</strong> ${doc.data().Name}</div><br>
-            <div style="color: #777; font-size: 24px;"><strong style="color: #555" >Hospital Name: </strong>${doc.data().Hospital_Name}</div><br>
-            <div style="color: #777; font-size: 24px;"><strong style="color: #555" >Hospital Department:</strong> ${doc.data().Hospital_Department}</div><br>
-            <div style="color: #777; font-size: 24px;"><strong style="color: #555" >Phone Number:</strong> ${doc.data().Phone_Number}</div><br>
-            <div style="color: #777; font-size: 24px;"><strong style="color: #555" >Registry Link:</strong> ${doc.data().Registry_Link}</div><br>
-            <div style="color: #777; font-size: 24px;"><strong style="color: #555" >Document Name:</strong> ${doc.data().Doc_Name}</div><br>
-      `;
-            accountDetails.innerHTML = html;
-        });
-        // toggle user UI elements
-        loggedInLinks.forEach(item => item.style.display = 'block');
-        loggedOutLinks.forEach(item => item.style.display = 'none');
->>>>>>> b66b63289fbe338529ae12dbda13a970001f2242
     } else {
         // clear account info
         accountDetails.innerHTML = '';
